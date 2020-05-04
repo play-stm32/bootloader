@@ -10,3 +10,6 @@ edition = "2018"
 cortex-m = "0.6"
 cortex-m-rt = "0.6.12"
 stm32f1xx-hal = {version = "0.5.3", features = ["stm32f103", "rt"]}
+embedded-hal = "0.2.3"
+embedded-sdmmc = "0.3.0"
+nb = "0.1.2"
