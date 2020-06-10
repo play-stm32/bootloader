@@ -43,7 +43,7 @@ fn main() {
     led::green_light();
 
     writeln!(USART1, "This is a IAP bootloader").unwrap();
-    writeln!(USART1, "start to check for update in cd card").unwrap();
+    writeln!(USART1, "start to check for upgrade from sd card").unwrap();
     writeln!(USART1, "").unwrap();
 
     upgrade::check_and_upgrade();
