@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GDB" type="CLion_Remote" remoteCommand=":3333" symbolFile="$PROJECT_DIR$/target/thumbv7m-none-eabi/debug/bootloader" sysroot="">
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" />
+    </method>
+  </configuration>
+</component>
