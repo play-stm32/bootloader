@@ -32,8 +32,17 @@ jobs:
         command: build
         args: --target thumbv7m-none-eabi
     
+    - name: make bootloader dir 
+      run: mkdir bootloader
+    
+    - name: rename bootloader to bootloader.elf
+      run: mv ./target/thumbv7m-none-eabi/debug/bootloader ./bootloader/bootloader.elf
+    
+    - name: turn elf to bin
+      run: arm-none-eabi-objcopy -O binary ./bootloader/bootloader.elf ./bootloader/bootloader.bin
+          
     - name: upload a build artifact
       uses: actions/upload-artifact@master
       with:
           name: bootloader
-          path: ./target/thumbv7m-none-eabi/debug/bootloader
+          path: ./bootloader
