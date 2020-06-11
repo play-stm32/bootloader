@@ -15,14 +15,25 @@ jobs:
     runs-on: macos-latest 
     steps: 
     - uses: actions/checkout@v2
-    - run: brew tap ArmMbed/homebrew-formulae
-    - run: brew install arm-none-eabi-gcc 
-    - uses: actions-rs/toolchain@v1
+    
+    - name: install arm-none-eabi-gcc toolchain
+      run: brew tap ArmMbed/homebrew-formulae | brew install arm-none-eabi-gcc 
+      
+    - name: add thumbv7m-none-eabi target
+      uses: actions-rs/toolchain@v1
       with: 
         toolchain: nightly
         target: thumbv7m-none-eabi
         override: true
-    - uses: actions-rs/cargo@v1
+
+    - name: build bootloader
+      uses: actions-rs/cargo@v1
       with:
         command: build
         args: --target thumbv7m-none-eabi
+    
+    - name: upload a build artifact
+      uses: actions/upload-artifact@master
+      with:
+          name: bootloader
+          path: ./target/thumbv7m-none-eabi/debug
