@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     name: Build Bootloader
-    runs-on: ubuntu-latest
+    runs-on: macos-latest 
     steps:
     - uses: actions/checkout@v2
     - uses: actions-rs/toolchain@v1
