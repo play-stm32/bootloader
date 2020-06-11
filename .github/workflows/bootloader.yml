@@ -36,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
           name: bootloader
-          path: ./target/thumbv7m-none-eabi/debug
+          path: ./target/thumbv7m-none-eabi/debug/bootloader
