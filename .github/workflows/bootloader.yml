@@ -14,6 +14,9 @@ jobs:
     name: Build Bootloader
     runs-on: macos-latest 
     steps:
+    - name: Install toolchain
+    - run: brew tap ArmMbed/homebrew-formulae
+    - run: brew install arm-none-eabi-gcc    
     - uses: actions/checkout@v2
     - uses: actions-rs/toolchain@v1
       with: 
