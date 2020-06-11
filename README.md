@@ -57,6 +57,10 @@ upgrade successfully
 boot os
 ```
 
+## Download
+
+* Download artifacts from [Actions](https://github.com/play-stm32/bootloader/actions)
+
 ## Relevant Project 
 
 * [sdio_sdhc](https://github.com/play-stm32/sdio_sdhc)
