@@ -41,7 +41,3 @@ pub fn green_dark() {
     let ptr = unsafe { &*stm32::GPIOF::ptr() };
     ptr.bsrr.write(|w| w.bs10().set());
 }
-
-
-
-
