@@ -2,7 +2,7 @@ use sdio_sdhc::sdcard::Card;
 use fat32::base::Volume;
 use core::fmt::Write;
 use crate::usb_ttl::USART1;
-use crate::{flash, tim, button, OS_START_ADDRESS, FIRMWARE_SIZE, UPGRADE_FLAG, SECOND};
+use crate::{flash, tim, button, OS_START_ADDRESS, UPGRADE_FLAG, SECOND};
 
 pub fn check_and_upgrade() {
     // Card from sdio_sdhc
@@ -23,21 +23,21 @@ pub fn check_and_upgrade() {
 
                     while unsafe { SECOND != 5 } {}
                     if unsafe { UPGRADE_FLAG } {
-                        let mut buf = [0; FIRMWARE_SIZE];
-                        // read file to buf
-                        if let Ok(len) = file.read(&mut buf) {
-                            writeln!(USART1, "upgrading").unwrap();
-                            writeln!(USART1, "start to erase flash, it will take minutes").unwrap();
-                            flash::erase(5, 11);
-                            writeln!(USART1, "erase flash successfully").unwrap();
+                        let mut addr = OS_START_ADDRESS;
 
-                            writeln!(USART1, "start to upgrade firmware").unwrap();
-                            flash::write(OS_START_ADDRESS, &buf[0..len]);
-                            writeln!(USART1, "upgrade successfully").unwrap();
-                            writeln!(USART1, "").unwrap();
-                        } else {
-                            writeln!(USART1, "Buf Size Too Small").unwrap();
+                        writeln!(USART1, "upgrading").unwrap();
+                        writeln!(USART1, "start to erase flash, it will take minutes").unwrap();
+                        flash::erase(5, 11);
+                        writeln!(USART1, "erase flash successfully").unwrap();
+
+                        writeln!(USART1, "start to upgrade firmware").unwrap();
+                        for (buf, len) in file.read_per_block() {
+                            flash::write(addr, &buf[0..len]);
+                            addr += len;
                         }
+
+                        writeln!(USART1, "upgrade successfully").unwrap();
+                        writeln!(USART1, "").unwrap();
                     }
                 }
                 Err(_) => {

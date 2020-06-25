@@ -26,7 +26,6 @@ static mut SECOND: u8 = 0;
 static mut UPGRADE_FLAG: bool = false;
 
 const OS_START_ADDRESS: usize = 0x08020000;
-const FIRMWARE_SIZE: usize = 20 * 1024;
 const MSP_ADDRESS: *mut usize = OS_START_ADDRESS as *mut usize;
 const VECTOR_ADDRESS: *mut usize = (OS_START_ADDRESS + 0x4) as *mut usize;
 
