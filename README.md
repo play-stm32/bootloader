@@ -17,7 +17,8 @@
 ### Power Up Board
 
 * Check the bootloader works well (green LED light)
-* Press KEY0 to upgrade (green LED dark and red LED light)
+* Auto upgrade if card has `install` file in the root 
+* OR press KEY0 to upgrade (green LED dark and red LED light)
 * Wait
 
 ## Attentions

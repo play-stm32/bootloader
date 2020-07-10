@@ -1,7 +1,7 @@
 use cortex_m::peripheral::NVIC;
 use stm32f4xx_hal::interrupt;
 use stm32f4xx_hal::stm32;
-use crate::{tim, button, led, SECOND, UPGRADE_FLAG};
+use crate::{tim, button, SECOND, UPGRADE_FLAG};
 
 /// NVIC enable
 pub fn nvic_enable() {
@@ -39,6 +39,4 @@ fn EXTI4() {
     tim::clean_interrupt_flag();
     tim::disable_count();
     button::disable_interrupt();
-    led::green_dark();
-    led::red_light();
 }
