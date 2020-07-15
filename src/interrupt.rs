@@ -1,7 +1,7 @@
 use cortex_m::peripheral::NVIC;
 use stm32f4xx_hal::interrupt;
 use stm32f4xx_hal::stm32;
-use crate::{tim, button, SECOND, UPGRADE_FLAG};
+use crate::{tim, button, UPGRADE_FLAG};
 
 /// NVIC enable
 pub fn nvic_enable() {
@@ -20,21 +20,14 @@ pub fn nvic_disable() {
 /// handle TIM2 interrupt
 #[interrupt]
 fn TIM2() {
-    unsafe {
-        tim::clean_interrupt_flag();
-        SECOND += 1;
-        if SECOND == 5 { tim::disable_count(); }
-    }
+    tim::clean_interrupt_flag();
+    tim::disable_count();
 }
-
 
 /// handle EXTI4 interrupt
 #[interrupt]
 fn EXTI4() {
-    unsafe {
-        UPGRADE_FLAG = true;
-        SECOND = 5;
-    }
+    unsafe { UPGRADE_FLAG = true; }
 
     tim::clean_interrupt_flag();
     tim::disable_count();

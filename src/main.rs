@@ -22,7 +22,6 @@ use core::panic::PanicInfo;
 use core::fmt::Write;
 use crate::usb_ttl::USART1;
 
-static mut SECOND: u8 = 0;
 static mut UPGRADE_FLAG: bool = false;
 
 const OS_START_ADDRESS: usize = 0x08020000;

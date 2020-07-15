@@ -2,7 +2,7 @@ use sdio_sdhc::sdcard::Card;
 use fat32::base::Volume;
 use core::fmt::Write;
 use crate::usb_ttl::USART1;
-use crate::{flash, tim, button, OS_START_ADDRESS, UPGRADE_FLAG, SECOND, led};
+use crate::{flash, tim, button, OS_START_ADDRESS, UPGRADE_FLAG, led};
 
 pub fn check_and_upgrade() {
     // Card from sdio_sdhc
@@ -44,7 +44,8 @@ pub fn check_and_upgrade() {
                         tim::enable_count();
                         button::enable_interrupt();
 
-                        while unsafe { SECOND != 5 } {}
+                        // delay 5 seconds
+                        while !tim::is_disable() {}
                         if unsafe { UPGRADE_FLAG } { upgrade(); }
                     } else {
                         writeln!(USART1, "found install file, auto upgrade").unwrap();

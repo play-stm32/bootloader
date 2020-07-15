@@ -5,9 +5,9 @@ pub fn init(rcc: &mut stm32::RCC, tim: &mut stm32::TIM2) {
     rcc.apb1enr.modify(|_r, w| w.tim2en().set_bit());
 
     // 84MHz / 8400 = 10KHz
-    // 1 / 10KHz * 10000 = 1
+    // 1 / 10KHz * 50000 = 5
     tim.psc.write(|w| w.psc().bits(8400));
-    tim.arr.write(|w| w.arr().bits(10000));
+    tim.arr.write(|w| w.arr().bits(50000));
 
     // load arr, update request source
     tim.cr1.modify(|_r, w| w.arpe().set_bit().urs().set_bit());
@@ -41,4 +41,11 @@ pub fn disable_count() {
 
     // disable
     ptr.cr1.modify(|_r, w| w.cen().clear_bit());
+}
+
+pub fn is_disable() -> bool {
+    let ptr = unsafe { &*stm32::TIM2::ptr() };
+
+    // read
+    ptr.cr1.read().cen().bit_is_clear()
 }
